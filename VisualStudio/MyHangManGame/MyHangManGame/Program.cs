@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MyHangManGame
@@ -9,7 +10,7 @@ namespace MyHangManGame
     class Program
     {
         static void Main(string[] args) {
-
+            /*
             string secretWord = "zapatos";
             string publicWord = "";
             string tempWord = "";
@@ -58,6 +59,55 @@ namespace MyHangManGame
             }
             
             Console.ReadLine();
+            */
+
+            GameManager gameManager = new GameManager();
+            Player player = new Player();
+            Board board = new Board();
+
+            gameManager.SetSecretWord("lapTop");
+
+            while(gameManager.isPlaying) {
+                board.Clear();
+                board.Draw(player.Life());
+
+                // OPTION 2
+                if (player.IsDead()) {
+                    board.Draw("GAME OVER!!");
+                    board.StarWars();
+                    break;
+                }
+                    
+
+                board.Draw(gameManager.publicWord);
+
+                string letter = player.EnterWord();
+                if (gameManager.CheckLetter(letter))
+                    gameManager.UpdatePublicWord(letter);
+                else
+                    player.Damage();
+
+                // OPTION 1
+                //if (player.IsDead())
+                //    gameManager.isPlaying = false;
+
+                if (gameManager.IsWin())
+                    gameManager.isPlaying = false;
+
+            }
+            // OPTION 1
+            //board.Clear();
+            //board.Draw(player.Life());
+            //board.Draw("GAME OVER!!");
+
+            if (gameManager.IsWin()) {
+                board.Draw("YOU WIN!!");
+                board.Mario();
+            }
+
+
+
+            board.Close();
         }
     }
 }
