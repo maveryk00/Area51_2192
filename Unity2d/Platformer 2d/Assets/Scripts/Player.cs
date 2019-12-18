@@ -10,7 +10,11 @@ public class Player : MonoBehaviour {
     public float speed = 1f;
     public Animator animator;
 
-    public bool grounded { get { return RoundAbsoluteToZero(rbody2D.velocity.y) == 0f; } }
+    public bool grounded {
+        get {
+            return RoundAbsoluteToZero(rbody2D.velocity.y) == 0f;
+        }
+    }
 
     // Start is called before the first frame update
     void Start() {
