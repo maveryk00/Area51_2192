@@ -9,7 +9,8 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (target == null)
+            target = Player.instance.transform;
     }
 
     void LateUpdate()
