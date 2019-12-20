@@ -14,6 +14,8 @@ public class Player : MonoBehaviour {
     public float jumpForce = 10f;
     public Animator animator;
 
+    public Vector3 startPos;
+
     public bool grounded {
         get {
             return RoundAbsoluteToZero(rbody2D.velocity.y) == 0f;
@@ -24,6 +26,8 @@ public class Player : MonoBehaviour {
     void Start() {
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        startPos = transform.position;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         rbody2D = GetComponent<Rigidbody2D>();
@@ -44,6 +48,12 @@ public class Player : MonoBehaviour {
         if (grounded && Input.GetKeyDown(KeyCode.Space))
             rbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
+    }
+
+    void OnCollisionEnter2D(Collision2D col) {
+        if (col.gameObject.tag == "DeathZone") {
+            transform.position = startPos;
+        }
     }
 
 
