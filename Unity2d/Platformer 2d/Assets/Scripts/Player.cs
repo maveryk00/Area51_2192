@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     private Rigidbody2D rbody2D;
 
     public float speed = 1f;
+    public float jumpForce = 10f;
     public Animator animator;
 
     public bool grounded {
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour {
         MyTranslate(Vector3.right * h * speed);
 
         if (grounded && Input.GetKeyDown(KeyCode.Space))
-            rbody2D.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+            rbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
     }
 
