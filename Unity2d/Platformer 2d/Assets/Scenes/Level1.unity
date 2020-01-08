@@ -1134,6 +1134,7 @@ MonoBehaviour:
   speed: 3
   jumpForce: 7
   animator: {fileID: 1551099615}
+  startPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1702978940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,7 +1149,7 @@ GameObject:
   - component: {fileID: 1702978942}
   m_Layer: 0
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
