@@ -25,17 +25,28 @@ public class Player : MonoBehaviour {
         }
     }
 
+    static public HealthBarController HealthBar {
+        set {
+            instance.healthBarController = value;
+        }
+    }
+
 
     [SerializeField]
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rbody2D;
     private bool onGround = false;
+    [SerializeField]
+    private HealthBarController healthBarController;
 
     public float speed = 1f;
     public float jumpForce = 10f;
     public Animator animator;
 
     public Vector3 startPos;
+
+    public float maxLife = 50;
+    public float currentLife;
 
     public bool grounded {
         get {
@@ -44,11 +55,13 @@ public class Player : MonoBehaviour {
         }
     }
 
-    // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         instance = this;
         DontDestroyOnLoad(gameObject);
+    }
 
+    // Start is called before the first frame update
+    void Start() {
         startPos = transform.position;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -69,6 +82,13 @@ public class Player : MonoBehaviour {
 
         if (grounded && Input.GetKeyDown(KeyCode.Space))
             rbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+
+        if (Input.GetKeyDown(KeyCode.O))
+            TakeDamage(2);
+
+        if (Input.GetKeyDown(KeyCode.P))
+            Heal(2);
 
     }
 
@@ -98,5 +118,15 @@ public class Player : MonoBehaviour {
             decimalValue = 0f;
         }
         return decimalValue;
+    }
+
+    void TakeDamage(float damage) {
+        currentLife -= damage;
+        healthBarController.currentLife = currentLife;
+    }
+
+    void Heal(float heal) {
+        currentLife += heal;
+        healthBarController.currentLife = currentLife;
     }
 }
