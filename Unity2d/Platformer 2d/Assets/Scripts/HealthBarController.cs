@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
-    public Image bar;
+    public Image barStart;
+    public Image barMiddle;
+    public Image barEnd;
+
     public float maxLife = 50;
     public float currentLife;
 
@@ -30,5 +33,9 @@ public class HealthBarController : MonoBehaviour
 
         currentLife = Mathf.Clamp(currentLife, 0, maxLife);
         bar.fillAmount = currentLife / maxLife;
+    }
+
+    void UpdateBar() {
+
     }
 }
