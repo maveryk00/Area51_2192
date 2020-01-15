@@ -1264,6 +1264,8 @@ MonoBehaviour:
   jumpForce: 7
   animator: {fileID: 1551099615}
   startPos: {x: 0, y: 0, z: 0}
+  maxLife: 50
+  currentLife: 0
 --- !u!1 &1700078944
 GameObject:
   m_ObjectHideFlags: 0
@@ -3078,6 +3080,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4088160091574853357, guid: 9f3e14cdc4fafb44d9cee90f865311a7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f3e14cdc4fafb44d9cee90f865311a7, type: 3}

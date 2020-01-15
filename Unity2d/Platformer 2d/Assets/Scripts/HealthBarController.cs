@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
-    private float minScale = 0f;
-    private float maxScale = 30f;
+    private float width;
 
-    public RectTransform barMiddle;
-    public RectTransform barEnd;
+    public RectTransform bar;
+    public RectTransform barPoint;
 
-    public float maxLife = 50;
+    public float maxLife = 10;
     public float _currentLife;
 
     public float currentLife {
@@ -28,32 +27,40 @@ public class HealthBarController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _currentLife = maxLife;
+        width = barPoint.sizeDelta.x;
+        _currentLife = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     void UpdateBar() {
-        float percentLife = _currentLife / maxLife;
-        float percentScale = maxScale * percentLife;
-
-        Vector3 scale = barMiddle.localScale;
-        scale.x = Mathf.Clamp(percentScale, minScale, maxScale);
-        Vector3 pos = barEnd.localPosition;
-        pos.x = barMiddle.localPosition.x + 
-                    (barMiddle.sizeDelta.x * scale.x);
-        barEnd.localPosition = pos;
-        
-        barMiddle.localScale = scale;
+        ClearLife();
+        AddLife();
     }
 
-    //public void SetLife(float life) {
-    //    _currentLife = life;
-    //    UpdateBar();
-    //}
+    void ClearLife() {
+        for (int i = 0; i < bar.childCount; i++)
+            Destroy(bar.GetChild(i).gameObject);
+    }
+
+    void AddLife() {
+        for (int i = 0; i < currentLife; i++) {
+            RectTransform point = Instantiate<RectTransform>(barPoint);
+            point.parent = bar;
+            point.localScale = Vector3.one;
+            point.localPosition = new Vector3(
+                width * i,
+                0,
+                0);
+        }
+    }
+
+    void RemoveLife() {
+        Destroy(bar.GetChild(bar.childCount-1).gameObject);
+    }
 
 }

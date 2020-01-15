@@ -85,7 +85,7 @@ public class Player : MonoBehaviour {
 
 
         if (Input.GetKeyDown(KeyCode.O))
-            TakeDamage(2);
+            TakeDamage(1);
 
         if (Input.GetKeyDown(KeyCode.P))
             Heal(2);
