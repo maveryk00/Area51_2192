@@ -1264,7 +1264,7 @@ MonoBehaviour:
   startPos: {x: 0, y: 0, z: 0}
   maxLife: 50
   currentLife: 0
-  bullet: {fileID: 5470240214761067455, guid: 4513cb40c43cd11449bbfe6d40da9684, type: 3}
+  bullet: {fileID: -3771912310240495074, guid: 4513cb40c43cd11449bbfe6d40da9684, type: 3}
 --- !u!1 &1700078944
 GameObject:
   m_ObjectHideFlags: 0

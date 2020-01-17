@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using Platformer;
+using Direction = Platformer.BulletRock.Direction;
 
 public class Player : MonoBehaviour {
 
@@ -50,7 +52,7 @@ public class Player : MonoBehaviour {
 
     [Header("Attack")]
     [Tooltip("Bullet prefab")]
-    public GameObject bullet;
+    public BulletRock bullet;
 
     public bool grounded {
         get {
@@ -140,19 +142,23 @@ public class Player : MonoBehaviour {
     }
 
     void Attack() {
-        Instantiate<GameObject>(
+        BulletRock clone = Instantiate<BulletRock>(
             bullet,
             transform.position,
             Quaternion.identity);
+
+        clone.Init(
+            spriteRenderer.flipX?
+            Direction.left:
+            Direction.right);
     }
 
     void FastAttack() {
-        GameObject clone = Instantiate<GameObject>(
+        BulletRock clone = Instantiate<BulletRock>(
             bullet,
             transform.position,
             Quaternion.identity);
 
-        BulletRock bulletRock = clone.GetComponent<BulletRock>();
-        bulletRock.Init(10f);
+        clone.Init(10f);
     }
 }
