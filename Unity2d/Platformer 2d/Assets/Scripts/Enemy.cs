@@ -27,5 +27,9 @@ namespace Platformer {
                 animator.SetBool("isdeath", true);
             }
         }
+
+        public void OnDeath() {
+            Destroy(gameObject);
+        }
     }
 }
