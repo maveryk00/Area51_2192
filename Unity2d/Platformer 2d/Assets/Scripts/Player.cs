@@ -1,164 +1,166 @@
 ﻿using UnityEngine;
-using Platformer;
-using Direction = Platformer.BulletRock.Direction;
 
-public class Player : MonoBehaviour {
 
-    static public Player instance;
+namespace Platformer {
+    using Direction = BulletRock.Direction;
+    public class Player : MonoBehaviour {
 
-    static public void SetPosition(Vector3 pos) {
-        pos.z = 0;
-        instance.transform.position = pos;
-    }
+        static public Player instance;
 
-    static public Vector3 setPosition {
-        set {
-            Vector3 pos = value;
+        static public void SetPosition(Vector3 pos) {
             pos.z = 0;
             instance.transform.position = pos;
         }
-    }
 
-    static public Transform setPosition2 {
-        set {
-            Vector3 pos = value.position;
-            pos.z = 0;
-            instance.transform.position = pos;
+        static public Vector3 setPosition {
+            set {
+                Vector3 pos = value;
+                pos.z = 0;
+                instance.transform.position = pos;
+            }
         }
-    }
 
-    static public HealthBarController HealthBar {
-        set {
-            instance.healthBarController = value;
+        static public Transform setPosition2 {
+            set {
+                Vector3 pos = value.position;
+                pos.z = 0;
+                instance.transform.position = pos;
+            }
         }
-    }
 
-
-    private SpriteRenderer spriteRenderer;
-    private Rigidbody2D rbody2D;
-    private bool onGround = false;
-    private HealthBarController healthBarController;
-
-    public float speed = 1f;
-    public float jumpForce = 10f;
-    public Animator animator;
-
-    public Vector3 startPos;
-
-    [Header("Life")]
-    public float maxLife = 50;
-    [Range(0f, Mathf.Infinity)]
-    public float currentLife;
-
-    [Header("Attack")]
-    [Tooltip("Bullet prefab")]
-    public BulletRock bullet;
-
-    public bool grounded {
-        get {
-            return RoundAbsoluteToZero(rbody2D.velocity.y) == 0f ||
-                    onGround;
+        static public HealthBarController HealthBar {
+            set {
+                instance.healthBarController = value;
+            }
         }
-    }
-
-    void Awake() {
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
-    // Start is called before the first frame update
-    void Start() {
-        startPos = transform.position;
-
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        rbody2D = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update() {
-        float h = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
-        animator.SetBool("walk", (h != 0));
-        animator.SetBool("jump", !grounded);
-        animator.SetFloat("vertical", Mathf.Sign(rbody2D.velocity.y));
-
-        if (h != 0) { spriteRenderer.flipX = (h < 0); }
-
-        //transform.Translate(Vector3.right * h * speed);
-        MyTranslate(Vector3.right * h * speed);
-
-        if (grounded && Input.GetKeyDown(KeyCode.Space))
-            rbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
 
-        if (Input.GetKeyDown(KeyCode.O))
-            TakeDamage(1);
+        private SpriteRenderer spriteRenderer;
+        private Rigidbody2D rbody2D;
+        private bool onGround = false;
+        private HealthBarController healthBarController;
 
-        if (Input.GetKeyDown(KeyCode.P))
-            Heal(2);
+        public float speed = 1f;
+        public float jumpForce = 10f;
+        public Animator animator;
 
-        if (Input.GetKeyDown(KeyCode.F))
-            Attack();
+        public Vector3 startPos;
 
-        if (Input.GetKeyDown(KeyCode.G))
-            FastAttack();
-    }
+        [Header("Life")]
+        public float maxLife = 50;
+        [Range(0f, Mathf.Infinity)]
+        public float currentLife;
 
-    void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.tag == "DeathZone") {
-            transform.position = startPos;
+        [Header("Attack")]
+        [Tooltip("Bullet prefab")]
+        public BulletRock bullet;
+
+        public bool grounded {
+            get {
+                return RoundAbsoluteToZero(rbody2D.velocity.y) == 0f ||
+                        onGround;
+            }
         }
-        
-        if (col.gameObject.tag == "Floor") {
-            onGround = true;
+
+        void Awake() {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-    }
 
-    void OnCollisionExit2D(Collision2D col) {
-        if (col.gameObject.tag == "Floor") {
-            onGround = false;
+        // Start is called before the first frame update
+        void Start() {
+            startPos = transform.position;
+
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            rbody2D = GetComponent<Rigidbody2D>();
         }
-    }
 
-    void MyTranslate(Vector3 translateVector) {
-        transform.localPosition += translateVector;
-    }
+        // Update is called once per frame
+        void Update() {
+            float h = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
+            animator.SetBool("walk", (h != 0));
+            animator.SetBool("jump", !grounded);
+            animator.SetFloat("vertical", Mathf.Sign(rbody2D.velocity.y));
 
-    float RoundAbsoluteToZero(float decimalValue) {
-        decimalValue = Mathf.Abs(decimalValue);
-        if (decimalValue <= 0.01f) {
-            decimalValue = 0f;
+            if (h != 0) { spriteRenderer.flipX = (h < 0); }
+
+            //transform.Translate(Vector3.right * h * speed);
+            MyTranslate(Vector3.right * h * speed);
+
+            if (grounded && Input.GetKeyDown(KeyCode.Space))
+                rbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+
+            if (Input.GetKeyDown(KeyCode.O))
+                TakeDamage(1);
+
+            if (Input.GetKeyDown(KeyCode.P))
+                Heal(2);
+
+            if (Input.GetKeyDown(KeyCode.F))
+                Attack();
+
+            if (Input.GetKeyDown(KeyCode.G))
+                FastAttack();
         }
-        return decimalValue;
-    }
 
-    void TakeDamage(float damage) {
-        currentLife -= damage;
-        healthBarController.currentLife = currentLife;
-    }
+        void OnCollisionEnter2D(Collision2D col) {
+            if (col.gameObject.tag == "DeathZone") {
+                transform.position = startPos;
+            }
 
-    void Heal(float heal) {
-        currentLife += heal;
-        healthBarController.currentLife = currentLife;
-    }
+            if (col.gameObject.tag == "Floor") {
+                onGround = true;
+            }
+        }
 
-    void Attack() {
-        BulletRock clone = Instantiate<BulletRock>(
-            bullet,
-            transform.position,
-            Quaternion.identity);
+        void OnCollisionExit2D(Collision2D col) {
+            if (col.gameObject.tag == "Floor") {
+                onGround = false;
+            }
+        }
 
-        clone.Init(
-            spriteRenderer.flipX?
-            Direction.left:
-            Direction.right);
-    }
+        void MyTranslate(Vector3 translateVector) {
+            transform.localPosition += translateVector;
+        }
 
-    void FastAttack() {
-        BulletRock clone = Instantiate<BulletRock>(
-            bullet,
-            transform.position,
-            Quaternion.identity);
+        float RoundAbsoluteToZero(float decimalValue) {
+            decimalValue = Mathf.Abs(decimalValue);
+            if (decimalValue <= 0.01f) {
+                decimalValue = 0f;
+            }
+            return decimalValue;
+        }
 
-        clone.Init(10f);
+        void TakeDamage(float damage) {
+            currentLife -= damage;
+            healthBarController.currentLife = currentLife;
+        }
+
+        void Heal(float heal) {
+            currentLife += heal;
+            healthBarController.currentLife = currentLife;
+        }
+
+        void Attack() {
+            BulletRock clone = Instantiate<BulletRock>(
+                bullet,
+                transform.position,
+                Quaternion.identity);
+
+            clone.Init(
+                spriteRenderer.flipX ?
+                Direction.left :
+                Direction.right);
+        }
+
+        void FastAttack() {
+            BulletRock clone = Instantiate<BulletRock>(
+                bullet,
+                transform.position,
+                Quaternion.identity);
+
+            clone.Init(10f);
+        }
     }
 }

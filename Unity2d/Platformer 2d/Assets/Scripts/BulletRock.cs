@@ -27,6 +27,10 @@ namespace Platformer {
 
         }
 
+        void OnCollisionEnter2D(Collision2D collision) {
+            Destroy(gameObject);
+        }
+
         public void Init(float speed) {
             this.speed = speed;
         }
