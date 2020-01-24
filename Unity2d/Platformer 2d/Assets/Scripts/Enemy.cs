@@ -29,6 +29,7 @@ namespace Platformer {
         }
 
         public void OnDeath() {
+            Spawner.Spawn();
             Destroy(gameObject);
         }
     }
