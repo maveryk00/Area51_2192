@@ -21,7 +21,8 @@ namespace Topdown {
 
         // Update is called once per frame
         void Update() {
-            if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetMouseButtonDown(0) &&
+                state == State.idle) {
                 Vector3 pos =
                 mainCamera.ScreenToWorldPoint(
                     Input.mousePosition
@@ -34,6 +35,7 @@ namespace Topdown {
         }
 
         IEnumerator Move(Vector3 target) {
+            state = State.move;
             float distance = 
                 Vector3.Distance(
                     transform.position,
@@ -56,6 +58,7 @@ namespace Topdown {
             }
 
             transform.position = target;
+            state = State.idle;
         }
     }
 }
