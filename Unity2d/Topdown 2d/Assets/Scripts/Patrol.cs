@@ -12,6 +12,9 @@ namespace Topdown {
         Vector3 origin;
 
         public Vector2[] points;
+        public float speed = 1f;
+
+        public ActionArea player;
 
         // Start is called before the first frame update
         void Start() {
@@ -27,7 +30,16 @@ namespace Topdown {
         void Update() {
             transform.position = Vector3.Lerp(startPos, endPos, t);
 
-            t += Time.deltaTime;
+            t += Time.deltaTime * speed;
+
+            if (Vector3.Distance(transform.position, player.transform.position) <= player.radius) {
+                speed *= 2f;
+            }
+            else {
+                float distance = Vector3.Distance(startPos, endPos);
+                speed = 2f / distance;
+            }
+
 
             if (t >= 1f) {
                 startPos = endPos;
@@ -42,6 +54,9 @@ namespace Topdown {
                 }
 
                 endPos = origin + point;
+
+                float distance = Vector3.Distance(startPos, endPos);
+                speed = 2f /distance;
 
                 t = 0;
             }

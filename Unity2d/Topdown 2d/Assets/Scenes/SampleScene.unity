@@ -155,6 +155,8 @@ MonoBehaviour:
   - {x: 5.5, y: -3}
   - {x: 1.58, y: -2.86}
   - {x: -2.18, y: -5.34}
+  speed: 1
+  player: {fileID: 136889706}
 --- !u!212 &54659105
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -236,6 +238,7 @@ GameObject:
   - component: {fileID: 136889704}
   - component: {fileID: 136889703}
   - component: {fileID: 136889705}
+  - component: {fileID: 136889706}
   m_Layer: 0
   m_Name: dog_0
   m_TagString: Untagged
@@ -321,6 +324,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   speed: 1
+--- !u!114 &136889706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136889702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1ec17e75715734287572613bf5c57c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 2
 --- !u!1 &142403677
 GameObject:
   m_ObjectHideFlags: 0
