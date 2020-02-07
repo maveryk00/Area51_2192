@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Topdown.AI {
+    public enum PathType {
+        pingpong,
+        loop
+    }
+
     public class Path : MonoBehaviour {
 
         public List<Vector3> points;
 
         public bool isClose = false;
+        public PathType type = PathType.loop;
 
         // Start is called before the first frame update
         void Start() {
