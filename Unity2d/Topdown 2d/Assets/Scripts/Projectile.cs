@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Topdown {
     public class Projectile : MonoBehaviour {
-
+        
         public ElementType type = ElementType.fire;
 
         public float speed = 1f;
