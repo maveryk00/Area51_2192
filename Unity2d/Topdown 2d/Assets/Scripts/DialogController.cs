@@ -15,9 +15,15 @@ namespace Topdown.Dialog {
             instance.HideDialog();
         }
 
+        static public void Next() {
+            instance.Next(instance.nextDialogId);
+        }
+
         private DialogModel model;
         private DialogView view;
 
+        [SerializeField]
+        private int nextDialogId = -1;
 
         void Awake() {
             instance = this;
@@ -49,6 +55,15 @@ namespace Topdown.Dialog {
             view.ShowText(model.GetTextByDialogId(index));
             view.ShowFace(model.GetFaceByDialogId(index));
             view.ShowArrow(model.IsEndById(index));
+
+            nextDialogId = model.GetNextById(index);
+        }
+
+        private void Next(int index) {
+            if (index >= 0)
+                LoadDialog(index);
+            else
+                HideDialog();
         }
 
     }

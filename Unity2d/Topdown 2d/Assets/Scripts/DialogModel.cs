@@ -52,5 +52,13 @@ namespace Topdown.Dialog {
         public bool IsEndByDialog(Dialog d) {
             return (d.next == -1);
         }
+
+        public int GetNextById(int id) {
+            return GetNextByDialog(dialogs[id]);
+        }
+
+        public int GetNextByDialog(Dialog d) {
+            return d.next;
+        }
     }
 }

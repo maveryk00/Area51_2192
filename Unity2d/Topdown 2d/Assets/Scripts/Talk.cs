@@ -17,6 +17,11 @@ namespace Topdown.Dialog {
                 if (npc != null)
                     DialogController.Show(0);
             }
+
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                if (npc != null)
+                    DialogController.Next();
+            }
         }
 
         void OnTriggerEnter2D(Collider2D collision) {
