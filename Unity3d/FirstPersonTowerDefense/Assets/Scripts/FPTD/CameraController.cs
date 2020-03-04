@@ -8,6 +8,8 @@ namespace FPTD {
         public bool invert = false;
         public float smooth = 10f;
 
+        private float angleX;
+
         // Start is called before the first frame update
         void Start() {
             
@@ -21,11 +23,12 @@ namespace FPTD {
             if (invert)
                 angle *= -1;
 
-            transform.Rotate(
-                Vector3.right, 
-                angle
-                );
+           
+            angleX += angle;
+            angleX = Mathf.Clamp(angleX, -60f, 60f);
 
+            transform.rotation = Quaternion.Euler(
+                Vector3.right * angleX);
             
         }
     }
