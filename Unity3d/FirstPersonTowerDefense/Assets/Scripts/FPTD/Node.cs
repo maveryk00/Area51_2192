@@ -7,10 +7,17 @@ namespace FPTD {
         public string name;
         public List<Node> exits;
 
+        private Vector3 _position;
+        public Vector3 position {
+            get {
+                return _position;
+            }
+        }
 
-        public Node() {
+        public Node(Vector3 position) {
             name = "New Node";
             exits = new List<Node>();
+            _position = position;
         }
 
         public void AddExit(Node node) {

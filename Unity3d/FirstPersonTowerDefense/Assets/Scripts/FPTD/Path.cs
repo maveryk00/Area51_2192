@@ -4,6 +4,25 @@ using UnityEngine;
 
 namespace FPTD {
     public class Path : MonoBehaviour {
+        static public Path instance;
+        static public Node startNode {
+            get {
+                return instance.start;
+            }
+        }
+
+        static public Node finishNode {
+            get {
+                return instance.finish;
+            }
+        }
+
+        static public Vector3 GetPositionAt(Node from, Node to, float t) {
+            return instance.GetPosition(from, to, t);
+        }
+
+
+
         public List<Node> nodes = new List<Node>();
 
         public Node start {
@@ -24,15 +43,20 @@ namespace FPTD {
             }
         }
 
-        // Start is called before the first frame update
-        void Start() {
+        #region Unity events
+        void Awake() {
+            instance = this;
             foreach (Transform child in transform) {
-                Node n = new Node();
+                Node n = new Node(child.position);
                 n.name = child.name;
                 AddNode(n);
             }
 
-            PrintNodes();
+            for (int i = 1; i < nodes.Count; i++) {
+                nodes[i - 1].AddExit(nodes[i]);
+            }
+
+            //PrintNodes();
         }
 
         // Update is called once per frame
@@ -51,10 +75,11 @@ namespace FPTD {
                     );
             }
         }
+        #endregion
 
         private void PrintNodes() {
             nodes.ForEach((node) => {
-                Debug.Log(node.name);
+                Debug.Log(node.name + " " + node.exits.Count);
             });
         }
 
@@ -62,7 +87,7 @@ namespace FPTD {
             Debug.Log("GenerateNodes");
             GameObject n = new GameObject(
                 "Node " + transform.childCount);
-            
+
             if (transform.childCount > 1) {
                 n.transform.position =
                     transform.GetChild(
@@ -76,8 +101,11 @@ namespace FPTD {
             nodes.Add(node);
         }
 
-        public Vector3 GetPosition(Node from, Node to) {
-            return Vector3.zero;
+        public Vector3 GetPosition(Node from, Node to, float t) {
+            return Vector3.Lerp(
+                from.position, 
+                to.position,
+                t);
         }
 
         public float GetDistance(Node from, Node to) {

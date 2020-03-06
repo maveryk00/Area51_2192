@@ -23,13 +23,12 @@ namespace FPTD {
             if (invert)
                 angle *= -1;
 
-           
             angleX += angle;
             angleX = Mathf.Clamp(angleX, -60f, 60f);
 
-            transform.rotation = Quaternion.Euler(
+            transform.localRotation = Quaternion.Euler(
                 Vector3.right * angleX);
-            
+
         }
     }
 }

@@ -14,14 +14,13 @@ namespace FPTD {
 
         // Update is called once per frame
         void Update() {
-            Vector3 pos = new Vector3(
-                Input.GetAxisRaw("Horizontal"),
-                0,
-                Input.GetAxisRaw("Vertical")
+            Vector3 pos = (
+                transform.forward * Input.GetAxisRaw("Vertical")
+                ) + (
+                transform.right * Input.GetAxisRaw("Horizontal")
                 );
-            pos *= speed * Time.deltaTime;
 
-            transform.position += pos;
+            pos *= speed * Time.deltaTime;
 
 
             float angle = Input.GetAxis("Mouse X");
@@ -31,6 +30,8 @@ namespace FPTD {
                 Vector3.up,
                 angle
                 );
+
+            transform.position +=  pos;
         }
     }
 }
