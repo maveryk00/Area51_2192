@@ -29,7 +29,14 @@ namespace FPTD {
         }
 
         public Node GetRandomExit() {
-            return exits[Random.Range(0, exits.Count)];
+            //int i = Random.Range(0, exits.Count);
+            //if (exits.Count == 0)
+            //    return null;
+            //return exits[i];
+
+            return exits.Count == 0 ? 
+                null:
+                exits[Random.Range(0, exits.Count)];
         }
 
     }
