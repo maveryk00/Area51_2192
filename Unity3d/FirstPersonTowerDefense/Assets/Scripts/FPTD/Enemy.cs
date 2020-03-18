@@ -59,9 +59,9 @@ namespace FPTD {
             t += speed * Time.deltaTime;
             transform.position =
                 Path.GetPositionAt(origin, target, t);
-
+            
             transform.forward =
-                (origin.position - target.position).normalized;
+                -(origin.position - target.position).normalized;
 
             if (t > 1f) {
                 t = 0;

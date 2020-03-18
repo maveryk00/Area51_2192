@@ -40,6 +40,32 @@ namespace FPTD {
 
 
 
+
+        List<List<int>> list = new List<List<int>>() {
+            new List<int>(){1,3},
+            new List<int>(){0,2,4},
+            new List<int>(){1,3},
+            new List<int>(){0,2,4},
+            new List<int>(){1,3}
+        };
+
+        [System.Serializable]
+        public struct NodesPos {
+            public string x;
+            public int y;
+            public int z;
+        }
+        [System.Serializable]
+        public struct jsonPath {
+
+            public NodesPos nodesPos;
+
+            public void Print() {
+                Debug.Log("{x:"+nodesPos.x+ ",y:" + nodesPos.y + ",z:" + nodesPos.z + "}");
+            }
+        }
+
+
         public List<Node> nodes = new List<Node>();
 
         public Node start {
@@ -72,14 +98,35 @@ namespace FPTD {
             //for (int i = 1; i < nodes.Count; i++) {
             //    nodes[i - 1].AddExit(nodes[i]);
             //}
-            for (int x = 0; x < 5; x++) {
-                for (int y = 0; y < 5; y++) {
-                    if (matrix[x, y] == 1)
-                        nodes[x].AddExit(nodes[y]);
+
+            //for (int x = 0; x < 5; x++) {
+            //    for (int y = 0; y < 5; y++) {
+            //        if (matrix[x, y] == 1)
+            //            nodes[x].AddExit(nodes[y]);
+            //    }
+            //}
+
+
+            //foreach (List<int> n in list) {
+            for (int n = 0; n < list.Count; n++) {
+                foreach (int m in list[n]) {
+                    nodes[n].AddExit(nodes[m]);
                 }
             }
 
-            PrintNodes();
+
+
+            //PrintNodes();
+        }
+
+
+        public TextAsset json;
+        
+        public jsonPath myPath;
+        private void Start() {
+            myPath = JsonUtility.FromJson<jsonPath>(json.text);
+            Debug.Log(json.text);
+            myPath.Print();
         }
 
         // Update is called once per frame

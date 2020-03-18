@@ -1,5 +1,6 @@
 {
-    "name": "ditto",
-    "order": 197,
-    "weight": 40
+	"nodesPos" : 
+		{"x":-17.3, "y":0, "z":16.9}
+		
+	
 }
