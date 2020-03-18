@@ -74,7 +74,10 @@ namespace FPTD {
             origin = target;
             target = origin.GetRandomExit();
 
-            if (target == null)
+            //if (target == null)
+            //    state = States.dead;
+
+            if (origin == Path.finishNode)
                 state = States.dead;
         }
 

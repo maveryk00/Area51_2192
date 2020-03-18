@@ -15,6 +15,12 @@ namespace FPTD {
 
             if (GUILayout.Button("Create Node"))
                 myPath.GenerateNodes();
+
+            if (GUILayout.Button("Create Nodes")) {
+                myPath.DeleteAllNodes();
+                myPath.GenerateFromMatrix();
+            }
+                
         }
     }
 }

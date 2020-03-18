@@ -22,6 +22,23 @@ namespace FPTD {
         }
 
 
+        Vector3[] nodesPos = new Vector3[5]{
+            new Vector3(-17.3f,0,16.9f),
+            new Vector3(15.1f,0,7.3f),
+            new Vector3(3.5f,0,-6.3f),
+            new Vector3(-15.6f,0,-17.1f),
+            new Vector3(17,0,-15.6f)
+            };
+
+        int[,] matrix = new int[5, 5] {
+            {0,1,0,1,0 },
+            {1,0,1,0,1 },
+            {0,1,0,1,0 },
+            {1,0,1,0,1 },
+            {0,1,0,1,0 },
+        };
+
+
 
         public List<Node> nodes = new List<Node>();
 
@@ -52,11 +69,17 @@ namespace FPTD {
                 AddNode(n);
             }
 
-            for (int i = 1; i < nodes.Count; i++) {
-                nodes[i - 1].AddExit(nodes[i]);
+            //for (int i = 1; i < nodes.Count; i++) {
+            //    nodes[i - 1].AddExit(nodes[i]);
+            //}
+            for (int x = 0; x < 5; x++) {
+                for (int y = 0; y < 5; y++) {
+                    if (matrix[x, y] == 1)
+                        nodes[x].AddExit(nodes[y]);
+                }
             }
 
-            //PrintNodes();
+            PrintNodes();
         }
 
         // Update is called once per frame
@@ -68,11 +91,22 @@ namespace FPTD {
             if (transform.childCount < 2)
                 return;
 
-            for (int i = 1; i < transform.childCount; i++) {
-                Gizmos.DrawLine(
-                    transform.GetChild(i - 1).position,
-                    transform.GetChild(i).position
-                    );
+            //for (int i = 1; i < transform.childCount; i++) {
+            //    Gizmos.DrawLine(
+            //        transform.GetChild(i - 1).position,
+            //        transform.GetChild(i).position
+            //        );
+            //}
+
+            for (int x = 0; x < 5; x++) {
+                for (int y = 0; y < 5; y++) {
+                    if (matrix[x, y] == 1) {
+                        Gizmos.DrawLine(
+                        transform.GetChild(x).position,
+                        transform.GetChild(y).position
+                        );
+                    }
+                }
             }
         }
         #endregion
@@ -97,13 +131,33 @@ namespace FPTD {
             n.transform.parent = transform;
         }
 
+        public void DeleteAllNodes() {
+            int childCount = transform.childCount;
+            for (int i = 0; i < childCount; i++) {
+                Debug.Log(transform.GetChild(0).name);
+                DestroyImmediate(transform.GetChild(0).gameObject);
+            }
+
+            nodes.Clear();
+        }
+
+        public void GenerateFromMatrix() {
+            for (int i = 0; i < nodesPos.Length; i++) {
+                GameObject obj = new GameObject("Node " + i);
+                obj.transform.position = nodesPos[i];
+                obj.transform.parent = transform;
+            }
+
+        }
+
+
         public void AddNode(Node node) {
             nodes.Add(node);
         }
 
         public Vector3 GetPosition(Node from, Node to, float t) {
             return Vector3.Lerp(
-                from.position, 
+                from.position,
                 to.position,
                 t);
         }
