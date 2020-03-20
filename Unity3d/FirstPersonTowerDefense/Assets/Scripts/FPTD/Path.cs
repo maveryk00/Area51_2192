@@ -50,19 +50,14 @@ namespace FPTD {
         };
 
         [System.Serializable]
-        public struct NodesPos {
-            public string x;
-            public int y;
-            public int z;
+        public struct exits {
+            public List<int> nodes;
         }
+
         [System.Serializable]
         public struct jsonPath {
-
-            public NodesPos nodesPos;
-
-            public void Print() {
-                Debug.Log("{x:"+nodesPos.x+ ",y:" + nodesPos.y + ",z:" + nodesPos.z + "}");
-            }
+            public Vector3[] nodes;
+            public List<exits> exits;
         }
 
 
@@ -121,12 +116,16 @@ namespace FPTD {
 
 
         public TextAsset json;
-        
+
         public jsonPath myPath;
-        private void Start() {
+        public void LoadJson() {
             myPath = JsonUtility.FromJson<jsonPath>(json.text);
-            Debug.Log(json.text);
-            myPath.Print();
+
+            for (int i = 0; i < myPath.nodes.Length; i++) {
+                for (int j = 0; j < myPath.exits[i].nodes.Count; j++) {
+                    Debug.Log("from: " + transform.GetChild(i).name + " to: " + transform.GetChild(myPath.exits[i].nodes[j]).name);
+                }
+            }
         }
 
         // Update is called once per frame
@@ -145,16 +144,26 @@ namespace FPTD {
             //        );
             //}
 
-            for (int x = 0; x < 5; x++) {
-                for (int y = 0; y < 5; y++) {
-                    if (matrix[x, y] == 1) {
-                        Gizmos.DrawLine(
-                        transform.GetChild(x).position,
-                        transform.GetChild(y).position
+            //for (int x = 0; x < 5; x++) {
+            //    for (int y = 0; y < 5; y++) {
+            //        if (matrix[x, y] == 1) {
+            //            Gizmos.DrawLine(
+            //            transform.GetChild(x).position,
+            //            transform.GetChild(y).position
+            //            );
+            //        }
+            //    }
+            //}
+
+            for (int i = 0; i < myPath.nodes.Length; i++) {
+                for (int j = 0; j < myPath.exits[i].nodes.Count; j++) {
+                    Gizmos.DrawLine(
+                        transform.GetChild(i).position,
+                        transform.GetChild(myPath.exits[i].nodes[j]).position
                         );
-                    }
                 }
             }
+
         }
         #endregion
 

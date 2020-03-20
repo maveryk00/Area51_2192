@@ -20,7 +20,9 @@ namespace FPTD {
                 myPath.DeleteAllNodes();
                 myPath.GenerateFromMatrix();
             }
-                
+
+            if (GUILayout.Button("Load json"))
+                myPath.LoadJson();
         }
     }
 }

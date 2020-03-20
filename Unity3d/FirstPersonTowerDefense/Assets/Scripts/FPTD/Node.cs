@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FPTD {
-    [System.Serializable]
     public class Node {
         public string name;
         public List<Node> exits;
