@@ -18,6 +18,12 @@ namespace FPTD {
         public Node origin = null;
         public Node target = null;
 
+        public Vector3 position {
+            get {
+                return transform.position;
+            }
+        }
+
         [SerializeField]
         private float t = 0;
 
