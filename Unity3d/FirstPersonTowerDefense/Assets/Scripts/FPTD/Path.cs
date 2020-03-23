@@ -22,32 +22,8 @@ namespace FPTD {
         }
 
 
-        Vector3[] nodesPos = new Vector3[5]{
-            new Vector3(-17.3f,0,16.9f),
-            new Vector3(15.1f,0,7.3f),
-            new Vector3(3.5f,0,-6.3f),
-            new Vector3(-15.6f,0,-17.1f),
-            new Vector3(17,0,-15.6f)
-            };
-
-        int[,] matrix = new int[5, 5] {
-            {0,1,0,1,0 },
-            {1,0,1,0,1 },
-            {0,1,0,1,0 },
-            {1,0,1,0,1 },
-            {0,1,0,1,0 },
-        };
-
-
-
-
-        List<List<int>> list = new List<List<int>>() {
-            new List<int>(){1,3},
-            new List<int>(){0,2,4},
-            new List<int>(){1,3},
-            new List<int>(){0,2,4},
-            new List<int>(){1,3}
-        };
+        public TextAsset json;
+        public jsonPath myPath;
 
         [System.Serializable]
         public struct exits {
@@ -84,48 +60,23 @@ namespace FPTD {
         #region Unity events
         void Awake() {
             instance = this;
+
             foreach (Transform child in transform) {
                 Node n = new Node(child.position);
                 n.name = child.name;
                 AddNode(n);
             }
 
-            //for (int i = 1; i < nodes.Count; i++) {
-            //    nodes[i - 1].AddExit(nodes[i]);
-            //}
 
-            //for (int x = 0; x < 5; x++) {
-            //    for (int y = 0; y < 5; y++) {
-            //        if (matrix[x, y] == 1)
-            //            nodes[x].AddExit(nodes[y]);
-            //    }
-            //}
-
-
-            //foreach (List<int> n in list) {
-            for (int n = 0; n < list.Count; n++) {
-                foreach (int m in list[n]) {
-                    nodes[n].AddExit(nodes[m]);
+            for (int i = 0; i < myPath.nodes.Length; i++) {
+                for (int j = 0; j < myPath.exits[i].nodes.Count; j++) {
+                    nodes[i].AddExit(nodes[myPath.exits[i].nodes[j]]);
                 }
             }
 
 
 
             //PrintNodes();
-        }
-
-
-        public TextAsset json;
-
-        public jsonPath myPath;
-        public void LoadJson() {
-            myPath = JsonUtility.FromJson<jsonPath>(json.text);
-
-            for (int i = 0; i < myPath.nodes.Length; i++) {
-                for (int j = 0; j < myPath.exits[i].nodes.Count; j++) {
-                    Debug.Log("from: " + transform.GetChild(i).name + " to: " + transform.GetChild(myPath.exits[i].nodes[j]).name);
-                }
-            }
         }
 
         // Update is called once per frame
@@ -136,24 +87,6 @@ namespace FPTD {
         void OnDrawGizmos() {
             if (transform.childCount < 2)
                 return;
-
-            //for (int i = 1; i < transform.childCount; i++) {
-            //    Gizmos.DrawLine(
-            //        transform.GetChild(i - 1).position,
-            //        transform.GetChild(i).position
-            //        );
-            //}
-
-            //for (int x = 0; x < 5; x++) {
-            //    for (int y = 0; y < 5; y++) {
-            //        if (matrix[x, y] == 1) {
-            //            Gizmos.DrawLine(
-            //            transform.GetChild(x).position,
-            //            transform.GetChild(y).position
-            //            );
-            //        }
-            //    }
-            //}
 
             for (int i = 0; i < myPath.nodes.Length; i++) {
                 for (int j = 0; j < myPath.exits[i].nodes.Count; j++) {
@@ -173,18 +106,14 @@ namespace FPTD {
             });
         }
 
-        public void GenerateNodes() {
-            Debug.Log("GenerateNodes");
-            GameObject n = new GameObject(
-                "Node " + transform.childCount);
+        public void LoadJson() {
+            myPath = JsonUtility.FromJson<jsonPath>(json.text);
 
-            if (transform.childCount > 1) {
-                n.transform.position =
-                    transform.GetChild(
-                        transform.childCount - 1).position;
+            for (int i = 0; i < myPath.nodes.Length; i++) {
+                for (int j = 0; j < myPath.exits[i].nodes.Count; j++) {
+                    Debug.Log("from: " + transform.GetChild(i).name + " to: " + transform.GetChild(myPath.exits[i].nodes[j]).name);
+                }
             }
-
-            n.transform.parent = transform;
         }
 
         public void DeleteAllNodes() {
@@ -197,16 +126,7 @@ namespace FPTD {
             nodes.Clear();
         }
 
-        public void GenerateFromMatrix() {
-            for (int i = 0; i < nodesPos.Length; i++) {
-                GameObject obj = new GameObject("Node " + i);
-                obj.transform.position = nodesPos[i];
-                obj.transform.parent = transform;
-            }
-
-        }
-
-
+        
         public void AddNode(Node node) {
             nodes.Add(node);
         }

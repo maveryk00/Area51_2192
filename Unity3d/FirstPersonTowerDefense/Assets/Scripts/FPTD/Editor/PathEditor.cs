@@ -13,13 +13,6 @@ namespace FPTD {
 
             myPath = (Path)target;
 
-            if (GUILayout.Button("Create Node"))
-                myPath.GenerateNodes();
-
-            if (GUILayout.Button("Create Nodes")) {
-                myPath.DeleteAllNodes();
-                myPath.GenerateFromMatrix();
-            }
 
             if (GUILayout.Button("Load json"))
                 myPath.LoadJson();
