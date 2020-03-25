@@ -23,8 +23,8 @@ public class ParticleController : MonoBehaviour
     }
 
     void Play() {
-        Debug.Log("Play");
         particle.Play();
+        Destroy(gameObject, 1.5f);
     }
 
 }

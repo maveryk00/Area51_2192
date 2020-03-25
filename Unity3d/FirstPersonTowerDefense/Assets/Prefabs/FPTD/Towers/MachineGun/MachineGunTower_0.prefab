@@ -9447,11 +9447,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 100
   turret: {fileID: 4491722969778658900}
-  hp: 0
+  hp: 10
   rate: 1
   upgradeCost: 300
   bullet: {fileID: 299814715319390982, guid: a5240ddb65a51b14fa49d42e3637d9a4, type: 3}
   level: 1
+  tower: {fileID: 296433532585537232, guid: a51b81ea34d09e64087faa1e04d63626, type: 3}
 --- !u!1 &4485813362331670118
 GameObject:
   m_ObjectHideFlags: 0
