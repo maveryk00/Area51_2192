@@ -17,6 +17,9 @@ namespace FPTD {
         }
 
         void LateUpdate() {
+            if (GameManager.currentState == GameManager.State.shop)
+                return;
+
             float angle = Input.GetAxis("Mouse Y");
             angle *= smooth * Time.deltaTime;
 
