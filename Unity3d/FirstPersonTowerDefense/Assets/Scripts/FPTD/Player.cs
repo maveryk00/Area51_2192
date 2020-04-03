@@ -10,12 +10,15 @@ namespace FPTD {
         public float torque = 100f;
 
         public Inventory inventory;
+        public Resources resources;
 
         // Start is called before the first frame update
         void Start() {
             //inventory = new Inventory();
 
             inventory.SelectItem(0);
+
+            resources = new Resources();
         }
 
         // Update is called once per frame
@@ -48,7 +51,9 @@ namespace FPTD {
             else {
                 cooldown += Time.deltaTime;
             }
-            
+
+
+
 
         }
 
@@ -70,5 +75,15 @@ namespace FPTD {
 
             transform.position += pos;
         }
+
+        public void AddGold(int amount) {
+            resources.AddResource(Resources.Type.gold, amount);
+            
+        }
+
+        public bool Upgrade(int amount) {
+            return resources.ConsumeResource(Resources.Type.gold, amount);
+        }
+
     }
 }

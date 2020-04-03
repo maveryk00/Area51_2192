@@ -10,6 +10,8 @@ namespace FPTD {
             dead
         }
 
+        private Transform _targetable;
+
         public States state = States.idle;
         public int life = 10;
         public float speed = 1f;
@@ -24,6 +26,12 @@ namespace FPTD {
             }
         }
 
+        public Vector3 targetable {
+            get {
+                return _targetable.position;
+            }
+        }
+
         [SerializeField]
         private float t = 0;
 
@@ -32,6 +40,7 @@ namespace FPTD {
             origin = Path.startNode;
             target = origin.GetRandomExit();
 
+            _targetable = transform.Find("Targetable");
             transform.position = origin.position;
         }
 

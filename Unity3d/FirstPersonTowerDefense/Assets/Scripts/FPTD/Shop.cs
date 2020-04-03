@@ -4,10 +4,24 @@ using UnityEngine;
 
 namespace FPTD {
     public class Shop : MonoBehaviour {
+        static private Shop instance;
+
+        static public void OpenShop() {
+            if (instance.canOpen)
+                instance.Open();
+        }
+
+        static public bool isOpen {
+            get {
+                return !instance.canOpen;
+            }
+        }
+
         private Camera mainCamera;
         private bool buy = false;
         private GameObject ghost;
 
+        private bool canOpen = true;
 
         public enum State {
             hide, show, place
@@ -17,9 +31,11 @@ namespace FPTD {
 
         public GameObject mainPanel;
         public GameObject buyPanel;
-        
+
         // Start is called before the first frame update
         void Start() {
+            instance = this;
+
             Close();
 
             mainCamera = Camera.main;
@@ -29,9 +45,9 @@ namespace FPTD {
         void Update() {
             if (Input.GetKeyDown(KeyCode.T)) {
                 Open();
-                
+
             }
-                
+
 
 
             switch (state) {
@@ -40,7 +56,7 @@ namespace FPTD {
                     PlaceTower();
                     break;
             }
-            
+
         }
 
         private void PlaceTower() {
@@ -55,7 +71,7 @@ namespace FPTD {
 
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
+            
             if (Physics.Raycast(ray, out hit, 10f)) {
                 Debug.DrawLine(ray.origin, hit.point, Color.green);
                 ghost.GetComponent<TowerGhost>().UpdateMaterial(true);
@@ -64,7 +80,7 @@ namespace FPTD {
                     ghost.transform.position = hit.point;
                     //ghost.transform.LookAt(GameManager.player.transform);
 
-                    float rot =  Time.deltaTime * 100f;
+                    float rot = Time.deltaTime * 100f;
                     ghost.transform.Rotate(Vector3.up * rot);
 
 
@@ -115,6 +131,7 @@ namespace FPTD {
             buyPanel.SetActive(false);
 
             state = State.show;
+            canOpen = false;
             GameManager.currentState = GameManager.State.shop;
         }
 
@@ -123,7 +140,15 @@ namespace FPTD {
             buyPanel.SetActive(false);
 
             state = State.hide;
+            
+            StartCoroutine(DelayClose());
+
             GameManager.currentState = GameManager.State.play;
+        }
+
+        IEnumerator DelayClose() {
+            yield return new WaitForEndOfFrame();
+            canOpen = true;
         }
     }
 }

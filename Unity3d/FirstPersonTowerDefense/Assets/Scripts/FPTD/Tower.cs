@@ -24,6 +24,7 @@ namespace FPTD {
 
         // Start is called before the first frame update
         void Start() {
+            TowerManager.Add(this);
             targetter = GetComponentInChildren<TowerTargetter>();
 
             GetProjectilePoints();
@@ -55,36 +56,42 @@ namespace FPTD {
             if (Input.GetKeyDown(KeyCode.V))
                 Sell();
 
-            if (Input.GetKeyDown(KeyCode.R))
-                Repair();
+            //if (Input.GetKeyDown(KeyCode.R))
+            //    Repair();
 
-            if (Input.GetKeyDown(KeyCode.KeypadMinus))
-                currentHP--;
+            //if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            //    currentHP--;
         }
 
 
         private void GetProjectilePoints() {
             projectilePoints = new List<Transform>();
 
-            foreach(Transform child in turret) {
+            foreach (Transform child in turret) {
                 if (child.name.StartsWith("ProjectilePoint"))
                     projectilePoints.Add(child);
             }
         }
 
         public void Attack() {
-            for (int i = 0; i < projectilePoints.Count; i++)
+            for (int i = 0; i < projectilePoints.Count; i++) {
                 Instantiate<Bullet>(bullet, projectilePoints[i].position, projectilePoints[i].rotation);
+                Debug.DrawLine(projectilePoints[i].position, targetter.target.targetable, Color.yellow);
+                //Debug.Break();
+            }
         }
 
         public void Aim() {
             if (targetter.target != null) {
-                turret.forward = (targetter.target.position - transform.position).normalized;
-                //turret.LookAt(targetter.target.transform);
+                //turret.forward = (targetter.target.position - transform.position).normalized;
+                turret.LookAt(targetter.target.targetable);
             }
         }
 
         public void Upgrade() {
+            if (!GameManager.player.Upgrade(upgradeCost))
+                return;
+
             level++;
             if (level > 3)
                 return;
@@ -94,6 +101,7 @@ namespace FPTD {
         }
 
         public void Sell() {
+            GameManager.player.AddGold(cost / 2);
             Destroy();
 
         }
@@ -105,6 +113,7 @@ namespace FPTD {
         }
 
         public void Destroy() {
+            TowerManager.Remove(this);
             Destroy(gameObject);
 
         }

@@ -8,7 +8,6 @@ namespace FPTD {
         
         // Start is called before the first frame update
         void Start() {
-
         }
 
         // Update is called once per frame
@@ -20,6 +19,6 @@ namespace FPTD {
             gameObject.SetActive(value);
         }
 
-        public void Use() { }
+        virtual public void Use() { }
     }
 }

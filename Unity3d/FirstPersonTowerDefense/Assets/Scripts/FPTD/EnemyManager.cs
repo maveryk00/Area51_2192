@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FPTD {
+    public enum EnemyType {
+        Hoverbuggy,
+        Hovercopter
+    }
+
     public class EnemyManager : MonoBehaviour {
 
         static public EnemyManager instance;
 
+        public Enemy[] prefabs;
         public List<Enemy> enemies;
 
         // Start is called before the first frame update
@@ -18,5 +24,11 @@ namespace FPTD {
         void Update() {
 
         }
+
+        public void SpawnEnemy(EnemyType type) {
+            Enemy enemy = Instantiate(prefabs[(int)type]);
+            enemies.Add(enemy);
+        }
+
     }
 }
