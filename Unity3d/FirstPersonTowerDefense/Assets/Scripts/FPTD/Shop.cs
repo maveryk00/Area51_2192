@@ -71,10 +71,10 @@ namespace FPTD {
 
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            
+
             if (Physics.Raycast(ray, out hit, 10f)) {
                 Debug.DrawLine(ray.origin, hit.point, Color.green);
-                ghost.GetComponent<TowerGhost>().UpdateMaterial(true);
+                //ghost.GetComponent<TowerGhost>().UpdateMaterial(true);
 
                 if (!buy) {
                     ghost.transform.position = hit.point;
@@ -92,17 +92,21 @@ namespace FPTD {
             }
             else {
                 Debug.DrawLine(ray.origin, ray.origin + (ray.direction * 10f), Color.red);
-                ghost.GetComponent<TowerGhost>().UpdateMaterial(false);
+                //ghost.GetComponent<TowerGhost>().UpdateMaterial(false);
             }
         }
 
         private void BuildTower() {
+            TowerGhost towerGhost = ghost.GetComponent<TowerGhost>();
+            Tower tower = towerGhost.tower;
+            if (towerGhost.isValid && GameManager.player.ConsumeGold(tower.cost))
+                Instantiate(tower, ghost.transform.position, ghost.transform.rotation);
+
+
             buy = true;
             state = State.hide;
-            Instantiate(ghost.GetComponent<TowerGhost>().tower, ghost.transform.position, ghost.transform.rotation);
             Destroy(ghost);
             ghost = null;
-
             Close();
         }
 
@@ -140,7 +144,7 @@ namespace FPTD {
             buyPanel.SetActive(false);
 
             state = State.hide;
-            
+
             StartCoroutine(DelayClose());
 
             GameManager.currentState = GameManager.State.play;

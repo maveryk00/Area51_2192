@@ -865,6 +865,7 @@ GameObject:
   - component: {fileID: 472323878}
   - component: {fileID: 472323877}
   - component: {fileID: 472323879}
+  - component: {fileID: 472323880}
   - component: {fileID: 472323876}
   m_Layer: 0
   m_Name: WaveManager
@@ -885,24 +886,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48ab1f8f8a4a7d4bb3a8e316473cc4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 472323877}
   enemies:
-  - {fileID: 7472432253522201570, guid: f5b469ae26fc21c44b3ed1715b79f5fd, type: 3}
-  spawnOrder: 01000000
-  delay: 1
-  myEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 472323877}
-        m_MethodName: StopWave
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - {fileID: 4307922278733147616, guid: e8efc20901dda284d85cd40727de0fc3, type: 3}
+  spawnOrder: 010000000100000001000000
+  spawnDelay: 1
+  startDelay: 5
 --- !u!114 &472323877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -916,9 +905,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
+  - {fileID: 472323880}
   - {fileID: 472323876}
   currentIndex: 0
-  currentWave: {fileID: 0}
   state: 1
 --- !u!4 &472323878
 Transform:
@@ -946,6 +935,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18fa301d9f62ed140b6de840eee58646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveJson: {fileID: 4900000, guid: 1ae70dfd70c16494197bb22b324d2eec, type: 3}
+  waveData:
+    waves:
+    - enemies:
+      - Hoverbuggy
+      spawnOrder: 000000000000000000000000
+      spawnDelay: 1
+      startDelay: 1
+    - enemies:
+      - Hovercopter
+      spawnOrder: 000000000000000000000000
+      spawnDelay: 1
+      startDelay: 5
+--- !u!114 &472323880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472323875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48ab1f8f8a4a7d4bb3a8e316473cc4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 472323877}
+  enemies:
+  - {fileID: 7472432253522201570, guid: f5b469ae26fc21c44b3ed1715b79f5fd, type: 3}
+  spawnOrder: 000000000000000000000000
+  spawnDelay: 1
+  startDelay: 1
 --- !u!1 &608652765
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,7 +2032,7 @@ GameObject:
   - component: {fileID: 1807133489}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

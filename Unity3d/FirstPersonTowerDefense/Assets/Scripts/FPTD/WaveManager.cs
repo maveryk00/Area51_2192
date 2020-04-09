@@ -13,8 +13,13 @@ namespace FPTD {
 
         public List<Wave> waves;
         public int currentIndex;
-        public Wave currentWave;
         public State state = State.stop;
+
+        public Wave currentWave {
+            get {
+                return waves[currentIndex];
+            }
+        }
 
         // Start is called before the first frame update
         void Start() {
@@ -26,7 +31,7 @@ namespace FPTD {
             if (state == State.play) {
                 timer += Time.deltaTime;
 
-                if (timer >= currentWave.delay) {
+                if (timer >= currentWave.spawnDelay) {
                     currentWave.Spawn();
                     timer = 0f;
                 }
@@ -36,14 +41,15 @@ namespace FPTD {
         }
 
         public void StartWave() {
-            currentWave = waves[currentIndex];
 
-            state = State.play;
+            StartCoroutine(StartDelay());
+            
         }
 
         public void StopWave() {
-            Debug.Log("Stop");
             state = State.stop;
+
+            NextWave();
         }
 
         public void NextWave() {
@@ -52,6 +58,12 @@ namespace FPTD {
             if (currentIndex >= waves.Count)
                 return;
 
+            StartWave();
+        }
+
+        private IEnumerator StartDelay() {
+            yield return new WaitForSecondsRealtime(currentWave.spawnDelay);
+            state = State.play;
         }
     }
 }

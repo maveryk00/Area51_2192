@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   dmg: 1
-  lifeTime: 1
+  lifeTime: 5
   particle: {fileID: 7656323183939142812, guid: 5af36ad6896210b4c95661909ad51622,
     type: 3}
 --- !u!135 &-3506910845363022539

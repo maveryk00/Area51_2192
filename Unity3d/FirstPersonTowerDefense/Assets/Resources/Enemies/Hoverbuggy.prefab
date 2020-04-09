@@ -19074,6 +19074,7 @@ GameObject:
   - component: {fileID: 6830964712007355950}
   - component: {fileID: 6776194696976771424}
   - component: {fileID: 7472432253522201570}
+  - component: {fileID: 118860320}
   m_Layer: 11
   m_Name: Hoverbuggy
   m_TagString: Untagged
@@ -19088,7 +19089,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6911477642324268136}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
@@ -19222,10 +19223,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84bc8cdd87175664d81f446133d4a38d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   life: 10
-  speed: 1
+  speed: 0.2
   minDmg: 1
   maxDmg: 3
+  healthBar: {fileID: 2373613882971340132}
+  t: 0
+--- !u!54 &118860320
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6911477642324268136}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &6911483561583012486
 GameObject:
   m_ObjectHideFlags: 0
@@ -33680,7 +33700,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6917130482334323722}
-  - component: {fileID: 6807729534159053904}
+  - component: {fileID: 2373613882971340132}
   m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
@@ -33704,7 +33724,7 @@ Transform:
   m_Father: {fileID: 6908993478992510912}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6807729534159053904
+--- !u!114 &2373613882971340132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -33713,13 +33733,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6911635227332235050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5440fde571ec4db4a719f37df8e972f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d8e7df200205c749af9e105cd6e23f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageableBehaviour: {fileID: 0}
   healthBar: {fileID: 6908845096183417668}
   backgroundBar: {fileID: 6908819404978704448}
-  showWhenFull: 0
 --- !u!1 &6911649668587952544
 GameObject:
   m_ObjectHideFlags: 0

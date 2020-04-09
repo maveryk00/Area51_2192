@@ -30,5 +30,9 @@ namespace FPTD {
             enemies.Add(enemy);
         }
 
+        public void RemoveEnemy(Enemy enemy) {
+            enemies.Remove(enemy);
+        }
+
     }
 }

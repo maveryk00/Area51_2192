@@ -81,6 +81,10 @@ namespace FPTD {
             
         }
 
+        public bool ConsumeGold(int amount) {
+            return resources.ConsumeResource(Resources.Type.gold, amount);
+        }
+
         public bool Upgrade(int amount) {
             return resources.ConsumeResource(Resources.Type.gold, amount);
         }

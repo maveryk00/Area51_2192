@@ -11,6 +11,7 @@ namespace FPTD {
         }
 
         private Transform _targetable;
+        private float maxLife;
 
         public States state = States.idle;
         public int life = 10;
@@ -19,6 +20,7 @@ namespace FPTD {
         public int maxDmg = 3;
         public Node origin = null;
         public Node target = null;
+        public EnemyHealthBar healthBar;
 
         public Vector3 position {
             get {
@@ -42,6 +44,9 @@ namespace FPTD {
 
             _targetable = transform.Find("Targetable");
             transform.position = origin.position;
+
+            maxLife = life;
+            healthBar.UpdateHealth(life/maxLife);
         }
 
         // Update is called once per frame
@@ -67,7 +72,8 @@ namespace FPTD {
         }
 
         public void Dead() {
-
+            EnemyManager.instance.RemoveEnemy(this);
+            Destroy(gameObject);
         }
 
         public void Move() {
@@ -97,7 +103,7 @@ namespace FPTD {
         }
 
         public void Death() {
-
+            
         }
 
         public void Drop() {
@@ -105,7 +111,11 @@ namespace FPTD {
         }
 
         public void Damage(int dmg) {
+            life -= dmg;
+            healthBar.UpdateHealth(life/maxLife);
 
+            if (life <= 0)
+                state = States.dead;
         }
 
         public void Attack() {

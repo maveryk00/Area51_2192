@@ -6,21 +6,23 @@ using UnityEngine.Events;
 namespace FPTD {
     public class Wave : MonoBehaviour {
         private int currentIndex = -1;
-        private FinishEvent call;
+        public WaveManager manager;
 
         public List<Enemy> enemies;
         public EnemyType[] spawnOrder;
-        public float delay;
+        public float spawnDelay;
+        public float startDelay;
 
-        //public UnityEvent finishEvent;
-        public delegate void FinishEvent();
-        public FinishEvent finishEvent;
+        private UnityEvent finishEvent;
 
         // Start is called before the first frame update
         void Start() {
-            //finishEvent = new UnityEvent();
-            //finishEvent.AddListener(call);
-            finishEvent += call;
+            finishEvent = new UnityEvent();
+            finishEvent.AddListener(Stop);
+        }
+        
+        void Stop() {
+            manager.StopWave();
         }
 
         // Update is called once per frame
@@ -31,10 +33,8 @@ namespace FPTD {
         public void Spawn() {
             currentIndex++;
             if (currentIndex >= spawnOrder.Length) {
-                //if (finishEvent != null)
-                //    finishEvent.Invoke();
                 if (finishEvent != null)
-                    finishEvent();
+                    finishEvent.Invoke();
 
                 return;
             }
@@ -42,9 +42,8 @@ namespace FPTD {
             EnemyManager.instance.SpawnEnemy(spawnOrder[currentIndex]);
         }
 
-        public void AddListener(FinishEvent call) {
-            this.call = call;
-
+        public void AddWaveManager(WaveManager manager) {
+            this.manager = manager;
         }
 
     }

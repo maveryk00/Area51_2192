@@ -24,6 +24,8 @@ namespace FPTD {
         void OnCollisionEnter(Collision collision) {
             ParticleSystem p = Instantiate(particle, transform.position, transform.rotation);
 
+            collision.gameObject.GetComponent<Enemy>().Damage(dmg);
+
             Destroy(gameObject);
         }
 

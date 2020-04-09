@@ -16,7 +16,7 @@ namespace FPTD {
 
         public void RegisterResources() {
             resourcesDictionary = new Dictionary<Type, int>();
-            AddResource(Type.gold, 1000);
+            AddResource(Type.gold, 300);
             AddResource(Type.metal, 0);
         }
 
