@@ -33,7 +33,9 @@ namespace FPTD {
 
         public void Repair() {
             Tower tower = TowerManager.ClosestTo(GameManager.player.transform.position);
-            tower.Repair();
+
+            if (Vector3.Distance(tower.transform.position, GameManager.player.transform.position) <= range)
+                tower.Repair();
         }
 
     }

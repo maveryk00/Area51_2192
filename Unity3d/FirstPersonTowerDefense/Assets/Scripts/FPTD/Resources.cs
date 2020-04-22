@@ -10,13 +10,26 @@ namespace FPTD {
 
         public Dictionary<Type, int> resourcesDictionary;
 
+        public int gold {
+            get {
+                return resourcesDictionary[Type.gold];
+            }
+        }
+
+        public int metal {
+            get {
+                return resourcesDictionary[Type.metal];
+            }
+        }
+
+
         public Resources() {
             RegisterResources();
         }
 
         public void RegisterResources() {
             resourcesDictionary = new Dictionary<Type, int>();
-            AddResource(Type.gold, 300);
+            AddResource(Type.gold, 1000);
             AddResource(Type.metal, 0);
         }
 

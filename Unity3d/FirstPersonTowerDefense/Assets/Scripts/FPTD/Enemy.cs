@@ -7,11 +7,13 @@ namespace FPTD {
         public enum States {
             idle,
             walk,
-            dead
+            dead,
+            finish
         }
 
         private Transform _targetable;
         private float maxLife;
+
 
         public States state = States.idle;
         public int life = 10;
@@ -21,6 +23,8 @@ namespace FPTD {
         public Node origin = null;
         public Node target = null;
         public EnemyHealthBar healthBar;
+        public Consumible drop;
+        public GameObject explosion;
 
         public Vector3 position {
             get {
@@ -34,6 +38,14 @@ namespace FPTD {
             }
         }
 
+        private float _speedMult = 1f;
+        public float speedMult {
+            set {
+                _speedMult = value;
+            }
+        }
+
+
         [SerializeField]
         private float t = 0;
 
@@ -46,7 +58,7 @@ namespace FPTD {
             transform.position = origin.position;
 
             maxLife = life;
-            healthBar.UpdateHealth(life/maxLife);
+            healthBar.UpdateHealth(life / maxLife);
         }
 
         // Update is called once per frame
@@ -61,7 +73,13 @@ namespace FPTD {
                     break;
 
                 case States.dead:
-                    Dead();
+                    Drop();
+                    state = States.finish;
+                    //Dead();
+                    break;
+
+                case States.finish:
+                    Finish();
                     break;
             }
 
@@ -73,14 +91,17 @@ namespace FPTD {
 
         public void Dead() {
             EnemyManager.instance.RemoveEnemy(this);
+
+            Instantiate(explosion, targetable, transform.rotation);
             Destroy(gameObject);
+
         }
 
         public void Move() {
-            t += speed * Time.deltaTime;
+            t += speed * _speedMult * Time.deltaTime;
             transform.position =
                 Path.GetPositionAt(origin, target, t);
-            
+
             transform.forward =
                 -(origin.position - target.position).normalized;
 
@@ -88,7 +109,11 @@ namespace FPTD {
                 t = 0;
                 NextNodes();
             }
-                
+
+        }
+
+        public void Finish() {
+            Dead();
         }
 
         public void NextNodes() {
@@ -99,20 +124,22 @@ namespace FPTD {
             //    state = States.dead;
 
             if (origin == Path.finishNode)
-                state = States.dead;
+                state = States.finish;
         }
 
         public void Death() {
-            
+
         }
 
         public void Drop() {
-
+            Instantiate(drop, transform.position, transform.rotation);
         }
 
         public void Damage(int dmg) {
+            if (life <= 0) return;
+
             life -= dmg;
-            healthBar.UpdateHealth(life/maxLife);
+            healthBar.UpdateHealth(life / maxLife);
 
             if (life <= 0)
                 state = States.dead;
@@ -121,5 +148,7 @@ namespace FPTD {
         public void Attack() {
 
         }
+
+
     }
 }

@@ -22,12 +22,8 @@ namespace FPTD {
 
         // Start is called before the first frame update
         void Start() {
-            foreach (Transform child in transform) {
-                MeshRenderer renderer = child.GetComponent<MeshRenderer>();
-                if (renderer != null) {
-                    renderers.Add(renderer);
-                }
-            }
+            renderers.AddRange(GetComponentsInChildren<MeshRenderer>());
+
 
             UpdateMaterial(true);
             Debug.Log(isValid);
@@ -46,7 +42,7 @@ namespace FPTD {
         }
 
         void OnTriggerEnter(Collider other) {
-            
+
             if (other.tag != "Floor")
                 UpdateMaterial(false);
         }

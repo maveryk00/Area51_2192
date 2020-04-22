@@ -156,9 +156,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae9de700994d5d940a1c58199c69e0ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 8309570545509404072, guid: fbc836dad81bbf04f91fe44c5e3e0381, type: 3}
+  renderers: []
+  tower: {fileID: 1171381203, guid: fbc836dad81bbf04f91fe44c5e3e0381, type: 3}
   valid: {fileID: 2100000, guid: 6fe9580bd67b34580977e0aa4eab9755, type: 2}
   invalid: {fileID: 2100000, guid: a33edf12f3c0044e8ba582a16ddaae3f, type: 2}
+  _isValid: 1
 --- !u!1 &603254386782191948
 GameObject:
   m_ObjectHideFlags: 0

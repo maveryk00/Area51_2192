@@ -9745,7 +9745,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8605084458239520231}
-  - component: {fileID: 296433532585537232}
+  - component: {fileID: 3056134032667226876}
   m_Layer: 10
   m_Name: MachineGunTower_1
   m_TagString: Untagged
@@ -9770,7 +9770,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &296433532585537232
+--- !u!114 &3056134032667226876
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9779,17 +9779,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8602109061035303599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 021bd72bb5d88594ba8cd7fdf87a1129, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f547f06cd55002409d3c6b30b369850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 300
-  turret: {fileID: 8607719855628887855}
   hp: 20
-  rate: 0.5
   upgradeCost: 600
-  bullet: {fileID: 299814715319390982, guid: a5240ddb65a51b14fa49d42e3637d9a4, type: 3}
   level: 2
   tower: {fileID: 2744000338816847415, guid: 239d52328d8889546b39f96ef22fcde8, type: 3}
+  turret: {fileID: 8607719855628887855}
+  rate: 1
+  bullet: {fileID: 299814715319390982, guid: a5240ddb65a51b14fa49d42e3637d9a4, type: 3}
 --- !u!1 &8602229925176820193
 GameObject:
   m_ObjectHideFlags: 0

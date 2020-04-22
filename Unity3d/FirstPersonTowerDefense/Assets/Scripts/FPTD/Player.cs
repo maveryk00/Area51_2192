@@ -12,6 +12,12 @@ namespace FPTD {
         public Inventory inventory;
         public Resources resources;
 
+        public Vector3 position {
+            get {
+                return transform.position;
+            }
+        }
+
         // Start is called before the first frame update
         void Start() {
             //inventory = new Inventory();
@@ -33,16 +39,18 @@ namespace FPTD {
                 inventory.SelectItem(1);
             }
 
+            if (Input.GetKeyDown(KeyCode.Alpha3)) {
+                inventory.SelectItem(2);
+            }
+
             //Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
             if (cooldown >= 1f) {
                 if (Input.GetAxisRaw("Mouse ScrollWheel") >= 0.1f) {
-                    Debug.Log("Next");
                     inventory.Next();
                     inventory.SelectItem(inventory.currentItemIndex);
                     cooldown = 0;
                 }
                 else if (Input.GetAxis("Mouse ScrollWheel") <= -0.1f) {
-                    Debug.Log("Prev");
                     inventory.Prev();
                     inventory.SelectItem(inventory.currentItemIndex);
                     cooldown = 0;
@@ -52,10 +60,14 @@ namespace FPTD {
                 cooldown += Time.deltaTime;
             }
 
-
-
-
         }
+
+        public GUIStyle style = new GUIStyle();
+        void OnGUI() {
+            GUILayout.Label("GOLD: " + resources.gold, style);
+            GUILayout.Label("METAL: " + resources.metal, style);
+        }
+
 
         private void Movement() {
             Vector3 pos = (
@@ -78,7 +90,14 @@ namespace FPTD {
 
         public void AddGold(int amount) {
             resources.AddResource(Resources.Type.gold, amount);
-            
+        }
+
+        public void AddMetal(int amount) {
+            resources.AddResource(Resources.Type.metal, amount);
+        }
+
+        public void AddResource(Resources.Type type, int amount) {
+            resources.AddResource(type, amount);
         }
 
         public bool ConsumeGold(int amount) {

@@ -19111,7 +19111,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243247032315055076, guid: c40bed98f23a748f89472abe9c1a6871,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: f82348f044e4641f38816d5c92ce9618, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 284169030cdb44ac5aeed3136719a521, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -19229,6 +19229,9 @@ MonoBehaviour:
   minDmg: 1
   maxDmg: 3
   healthBar: {fileID: 2373613882971340132}
+  drop: {fileID: 7063077133721304032, guid: 0bfa662816f7e744396813c58261ecbc, type: 3}
+  explosion: {fileID: 3533822729995109091, guid: 9516abe1a049aea429a355faab55f67e,
+    type: 3}
   t: 0
 --- !u!54 &118860320
 Rigidbody:
