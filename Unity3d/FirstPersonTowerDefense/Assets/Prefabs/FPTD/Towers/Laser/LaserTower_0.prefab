@@ -14539,11 +14539,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 100
-  hp: 0
+  hp: 10
   upgradeCost: 300
   level: 1
-  tower: {fileID: 0}
+  tower: {fileID: 3396561192439579133, guid: 289cf44e796dcc846a46c011e5effa60, type: 3}
+  isActive: 0
   target: {fileID: 0}
+  nextTarget: {fileID: 0}
   turret: {fileID: 4971560905275287705}
   laser: {fileID: 5304618678952430996, guid: dd64f9df778b192478ac9d8dfa0931cc, type: 3}
 --- !u!1 &4966008978860576959

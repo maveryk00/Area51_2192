@@ -143,5 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   line: {fileID: 5304618678952430994}
   t: 0
+  origin: {fileID: 0}
+  target: {fileID: 0}
   speed: 3.5
-  distance: 4
+  dmg: 1
+  rate: 0.1

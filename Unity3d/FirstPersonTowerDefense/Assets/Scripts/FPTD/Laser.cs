@@ -13,6 +13,7 @@ namespace FPTD {
         private float t = 0f;
 
         private Enemy enemy;
+        private float nextAttack = 0f;
 
         public Transform origin;
         public Transform target;
@@ -61,8 +62,12 @@ namespace FPTD {
             if (target == null) return;
 
             enemy = target.GetComponent<Enemy>();
-            if (enemy != null)
+            if (enemy == null) return;
+
+            if (Time.time >= nextAttack) {
+                nextAttack = Time.time + rate;
                 enemy.Damage(dmg);
+            }
         }
 
         //void OnDrawGizmos() {
