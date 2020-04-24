@@ -51,14 +51,17 @@ namespace FPTD {
 
         // Start is called before the first frame update
         void Start() {
+            
+            maxLife = life;
+            healthBar.UpdateHealth(life / maxLife);
+
+            _targetable = transform.Find("Targetable");
+
+
             origin = Path.startNode;
             target = origin.GetRandomExit();
 
-            _targetable = transform.Find("Targetable");
             transform.position = origin.position;
-
-            maxLife = life;
-            healthBar.UpdateHealth(life / maxLife);
         }
 
         // Update is called once per frame
@@ -98,6 +101,9 @@ namespace FPTD {
         }
 
         public void Move() {
+            if (target == null)
+                return;
+
             t += speed * _speedMult * Time.deltaTime;
             transform.position =
                 Path.GetPositionAt(origin, target, t);

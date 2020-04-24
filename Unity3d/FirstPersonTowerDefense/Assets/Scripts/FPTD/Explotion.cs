@@ -13,6 +13,7 @@ namespace FPTD {
 
         public float speed = 1f;
         public float maxRadius = 5f;
+        public int dmg;
 
         // Start is called before the first frame update
         void Start() {
@@ -27,7 +28,18 @@ namespace FPTD {
         }
 
         void OnTriggerEnter(Collider other) {
-            Debug.Log(other.name);    
+            Enemy enemy = other.GetComponent<Enemy>();
+
+            if (enemy != null) {
+                enemy.Damage(this.dmg);
+
+                float distance = Vector3.Distance(enemy.position, transform.position);
+                float dmg = distance < 1? this.dmg: this.dmg / distance;
+
+                dmg = Mathf.Round(dmg * 100) / 100;
+                Debug.Log(dmg +  " " + distance);
+
+            }
         }
 
         IEnumerator Exploit() {
@@ -41,7 +53,7 @@ namespace FPTD {
             }
 
             sphere.radius = maxRadius;
-
+            Destroy(gameObject);
         }
     }
 }

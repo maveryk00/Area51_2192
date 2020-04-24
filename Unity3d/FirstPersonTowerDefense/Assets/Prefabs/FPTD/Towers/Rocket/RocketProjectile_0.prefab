@@ -9378,7 +9378,7 @@ Transform:
   m_GameObject: {fileID: 5504919489017714360}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 1.1467214, y: 1.3486849e-16, z: -10}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.75}
+  m_LocalScale: {x: 0.225, y: 0.225, z: 1.125}
   m_Children:
   - {fileID: 5508353572596165852}
   - {fileID: 5507644211542925044}
@@ -9411,11 +9411,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c3eb8d59aa7a34c8c2280640dd1fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {x: 50, y: 0, z: 0}
-  end: {x: 50, y: 0, z: -10}
-  t: 0
+  start: {x: -10, y: 0, z: 0}
+  end: {x: 10, y: 0, z: 0}
+  t: 1
   height: 10
-  speed: 0.6
+  speed: 10
+  dmg: 1
   curve:
     serializedVersion: 2
     m_Curve:
@@ -9458,6 +9459,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  explotion: {fileID: 1711988377125881311, guid: 4bd7b801a6a6c7042929cbc75c163039,
+    type: 3}
 --- !u!1 &5504971430067402746
 GameObject:
   m_ObjectHideFlags: 0

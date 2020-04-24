@@ -16,9 +16,17 @@ namespace FPTD {
         public float height = 5f;
 
         public float speed = 1f;
+        public int dmg = 1;
 
         public AnimationCurve curve;
         public Explotion explotion;
+
+        public float distance {
+            get {
+                return Vector3.Distance(start, end);
+            }
+        }
+
 
         // Start is called before the first frame update
         void Start() {
@@ -32,24 +40,26 @@ namespace FPTD {
                 return;
             }
 
-            t += speed * Time.deltaTime;
+            t += (speed * Time.deltaTime) / distance;
             Move();
 
         }
 
-        
+
 
         void OnDrawGizmos() {
             Gizmos.DrawWireSphere(start, 0.2f);
             Gizmos.DrawWireSphere(end, 0.2f);
 
-            if (!Application.isPlaying) 
+            if (!Application.isPlaying)
                 Move();
 
         }
 
         private void Explotion() {
-            Instantiate(explotion, transform.position, Quaternion.identity);
+            Explotion clone = Instantiate(explotion, transform.position, Quaternion.identity);
+            clone.dmg = dmg;
+
             Destroy(gameObject);
         }
 
@@ -58,9 +68,12 @@ namespace FPTD {
             //pos.y = Mathf.Lerp(0f, height, t);
             //pos.y = Lerp(0, height, Spike(t));
 
-            pos.y = curve.Evaluate(t) * height;
+            pos.y += curve.Evaluate(t) * height;
 
-            transform.forward = (pos - transform.position).normalized;
+            Vector3 forward = (pos - transform.position).normalized;
+            if (forward != Vector3.zero)
+                transform.forward = forward;
+
             transform.position = pos;
         }
 
